@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- Author: Alan Ding -->
+<html lang="en">
+
+<head>
+  <title>TigerCrush</title>
+  {% include 'head.html' %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeahead.js-bootstrap4-css@1.0.0/typeaheadjs.css">
+</head>
+
+<body class="bg-light">
+ {% include 'nav.html' %}
+  <!--------------------------------------------------------------------------->
+  {% if err is defined and err != "": %}
+    <div class="py-2">
+      <div class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ err }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <!--------------------------------------------------------------------------->
+  {% if firstTime %}
+    <div class="py-2">
+      <div class="container">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          <b>Important:</b> Welcome to TigerCrush! This application sends emails from a non-princeton.edu account to your princeton.edu inbox to notify you of any matches. If you would like to view the emails, <b>you need to whitelist us on Proofpoint first: click the "Whitelist Us!" link above for instructions!</b> If you would prefer to continue letting Proofpoint filter our emails, that's fine too. Just be sure to check TigerCrush often to see if you've been matched and to get the email address of your match!
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+  <!--------------------------------------------------------------------------->
+  <div class="text-center py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" style="">
+          <h1 class="text-primary"><b>Hello, {{ name }}!</b></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------->
+  <div class="text-center" style="">
+    <div class="container">
+      <div class="row">
+        <!--------------------------------------------------------------------------->
+        <div class="col-md-6 py-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary"><b>Your Crushes</b></h5>
+              <p class="card-text">You can still add <b class="text-primary">{{ remCrushes }}</b> {% if remCrushes == 1 %}crush{% else %}crushes{% endif %}.</p>
+              <form id="addCrushForm" action="/addCrush" method="post">
+                <div class="form-row" {% if remCrushes == 0 %}data-toggle="tooltip" title="You can no longer add any more crushes."{% endif %}>
+                  <div class="col-8">
+                    <input id="crushSelector" class="form-control typeahead pb-2" style="width: 100%" placeholder="Search for crushes here..." name="crushNetid" data-provide="typeahead" required {% if remCrushes == 0 %}disabled{% endif %}>
+                    <input id="netidStore" type="hidden" name="netid" value="{{ netid }}">
+                  </div>
+                  <div class="col-4">
+                    <span class="float-right">
+                      <input id="addCrushButton" type="button" class="input-group-append btn btn-primary" value="Add crush!" {% if remCrushes == 0 %}disabled{% endif %}>
+                    </span>
+                  </div>
+                </div>
+              </form>
+              <div id="crushList"><!-- dynamically populated --></div>
+            </div>
+          </div>
+        </div>
+        <!--------------------------------------------------------------------------->
+        <div class="col-md-6 py-2">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary"><b>Your Matches</b></h5>
+              <div id="matchList"><!-- dynamically populated --></div>
+              <h5 class="card-title text-primary"><b>Your Secret Admirers</b></h5>
+              <p class="card-text"><b class="text-primary">{{ numSecretAdmirers }}</b> {% if numSecretAdmirers == 1 %}person{% else %}people{% endif %} that you don't have a crush on have a crush on you!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------->
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-center">~ Please send questions, suggestions, feedback, and bug reports to <a href="mailto:tigercrushfeedback@gmail.com">tigercrushfeedback@gmail.com</a> ~ </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------------------------------------------------------------------------->
+  <div class="modal" id="confirmModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p class="text-center" id="confirmationMsg">Are you sure you want to add this crush?</p>
+          <p class="text-center">This action cannot be undone.</p>
+          <div class="modal-footer">
+            <a href="#" id="submitButton" class="btn btn-primary">Yes</a> <button type="button" class="btn btn-outline-primary" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.2/typeahead.bundle.min.js"></script>
+  <script src="../static/js/populatelists.js"></script>
+  <script src="../static/js/autocomplete.js"></script>
+  <script src="../static/js/tooltips.js"></script>
+  <script src="../static/js/submitInModal.js"></script>
+</body>
+
+</html>

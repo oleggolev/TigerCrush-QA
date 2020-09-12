@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- Author: Alan Ding -->
+
+<html lang="en">
+
+<head>
+  <title>TigerCrush - Login</title>
+  {% include 'head.html' %}
+  <style>
+    img {
+      width: 75%;
+      height: 75%;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <div class="py-5 text-center align-items-center d-flex h-100">
+    <div class="container">
+      <div class="row">
+        <div class="mx-auto col-lg-8 col-md-10">
+          <h1 class="mb-4 text-primary display-3"><b>TigerCrush</b></h1>
+          <p class="text-justify">Have you ever wondered if any of your crushes are also crushing on you? TigerCrush is here to answer that question and match you with any of your crushes that like you back! You will remain unidentified to any of your crushes that don't have you as their crush. Try TigerCrush out by logging in below!</p>
+        </div>
+      </div>
+      <!--------------------------------------------------------------------------->
+      {% if err is defined %}
+        <div class="py-2">
+          <div class="container">
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+              {{ err }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+       <!--------------------------------------------------------------------------->
+
+      <div class="container py-2">
+        <div class="row">
+          <div class="col-3"></div>
+          <div class="col-sm-offset-3 col-sm-6">
+             <form action="login_user" method="get" align="center">
+                <div class="input-group w-100">
+                  {% if CAS == False %}
+                  <input type="text" placeholder="netid" name="netid">
+                  <div class="input-group-append"><input class="btn btn-primary mx-1" type="submit" value="Login with Princeton NetID"></div>
+                  {% else %}
+                  <div class="col-sm-12">
+                  <input class="btn btn-primary mx-1" type="submit" value="Login with Princeton NetID">
+                  </div>
+                  {% endif %}
+                </div>
+              </form>
+          </div>
+          <div class="col-3"></div>
+        </div>
+      </div>
+      <div class="container py-2">
+        <div class="row">
+          <div class="mx-auto col-lg-8 col-md-10">
+            <small class="text-justify"><b>Privacy statement.</b> An unfortunate tautology of information security holds that if we as developers need to write code to access some information, no matter how encrypted or obfuscated it is, we would hence have access to that information. With this in mind, we stand firm in our promise not to look at the crush information you've entrusted us with. By using this application, you are affirming your trust in us. Equivalently, if you don't trust us, you reserve the right to not use this application.</small>
+          </div>
+        </div>
+      </div>
+      <div class="container py-2">
+        <div class="row">
+          <div class="col-md-12">
+            <a href="https://www.princetonrainforestproject.com/"><img src="../static/characters.png" alt="Tigers in love!!!"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" style=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </div>
+</body>
+
+</html>
