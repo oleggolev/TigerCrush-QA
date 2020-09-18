@@ -325,6 +325,40 @@ def addCrushEndpoint():
 from db_models import Crush, User
 from sqlalchemy import or_
 
+@appl.cli.command(name='createDB')
+def createDB():
+
+    User.__table__.create(db.engine, checkfirst=True)
+    Crush.__table__.create(db.engine, checkfirst=True)
+    db.session.commit()
+
+    print('Done!\n')
+
+    print('Trying to fetch students from TigerBook...', flush=True)
+    # print('Trying to fetch students locally...', flush=True)
+
+    # grab data
+    students = getStudents()
+
+    print('Deleting existing student data... ', end='', flush=True)
+
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+    print('Done!')
+
+    print('Populating database with student data... ', end='', flush=True)
+
+    # create rows in the db for each student
+    for student in students:
+        netid = student['net_id']
+        name = student['full_name']
+        year = student['class_year']
+        addUser(netid, name, year)
+
+    print('Done!')
+
 @appl.cli.command(name='resetDB')
 def resetDB():
     if input("Do you wish to DELETE the DEVELOPERS' CRUSH DATA? Enter y or n: ") != 'y':
