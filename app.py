@@ -24,36 +24,36 @@ import json
 #                          ENABLE / DISABLE CAS
 # -----------------------------------------------------------------------
 
-CAS = False
+CAS = True
 
 # -----------------------------------------------------------------------
 #                         APP AND DATABASE SETUP
 # -----------------------------------------------------------------------
 
 appl = Flask(__name__, template_folder="templates", static_folder="static")
-# appl.secret_key = os.environ.get('SECRET_KEY')
-#
-# mail_settings = {
-#     "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
-#     "MAIL_PORT": os.environ.get('MAIL_PORT'),
-#     "MAIL_USE_TLS": False,
-#     "MAIL_USE_SSL": True,
-#     "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
-#     "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
-#     "MAIL_DEFAULT_SENDER": os.environ.get('MAIL_DEFAULT_SENDER')
-# }
+appl.secret_key = os.environ.get('SECRET_KEY')
 
-# appl.config.update(mail_settings)
-# mail = Mail(appl)
+mail_settings = {
+    "MAIL_SERVER": os.environ.get('MAIL_SERVER'),
+    "MAIL_PORT": os.environ.get('MAIL_PORT'),
+    "MAIL_USE_TLS": False,
+    "MAIL_USE_SSL": True,
+    "MAIL_USERNAME": os.environ.get('MAIL_USERNAME'),
+    "MAIL_PASSWORD": os.environ.get('MAIL_PASSWORD'),
+    "MAIL_DEFAULT_SENDER": os.environ.get('MAIL_DEFAULT_SENDER')
+}
+
+appl.config.update(mail_settings)
+mail = Mail(appl)
 
 # -------------- !!! COMMENT OUT IF RUNNING ON HEROKU !!! -------------- #
-from private import USER, PW, HOST, DB_NAME
-DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
-appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+# from private import USER, PW, HOST, DB_NAME
+# DB_URL = "postgresql+psycopg2://{0}:{1}@{2}/{3}".format(USER, PW, HOST, DB_NAME)
+# appl.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 # ---------------------------------------------------------------------- #
 
 # --------------- !!! COMMENT OUT IF RUNNING LOCALLY !!! --------------- #
-# appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+appl.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 # ---------------------------------------------------------------------- #
 
 appl.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
