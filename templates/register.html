@@ -34,17 +34,17 @@
             <form id="registerUserForm" action="{{ url_for('register_user') }}" method="post">
                 <div class="form-group">
                   <label for="first-name">First Name</label>
-                  <input type="first-name" class="form-control" id="first-name" aria-describedby="first-name" placeholder="Enter your first name" required>
+                  <input type="text" name="first-name" class="form-control" id="first-name" aria-describedby="first-name" placeholder="Enter your first name" required>
                   <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                 <div class="form-group">
                   <label for="last-name">Last Name</label>
-                  <input type="last-name" class="form-control" id="last-name" placeholder="Enter your last name" required>
+                  <input type="text" name="first-name" class="form-control" id="last-name" placeholder="Enter your last name" required>
                   <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                 <div class="form-group">
                     <label for="class-year">Select Your Class Year</label>
-                    <select class="form-control" id="class-year" required>
+                    <select class="form-control" id="class-year" name="class-year" required>
                       <option>2021</option>
                       <option>2022</option>
                       <option>2023</option>
@@ -68,6 +68,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
