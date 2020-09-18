@@ -72,6 +72,7 @@ from get_local_students import getLocalStudents
 #                 !!! COMMENT OUT IF RUNNING LOCALLY !!!
 # -----------------------------------------------------------------------
 
+
 # returns the username and True or an error message and False
 def check_user(session):
     if CAS:
@@ -85,6 +86,7 @@ def check_user(session):
             return err, True
 
 # -----------------------------------------------------------------------
+
 
 @appl.route('/login_user', methods=['GET'])
 def login_user():
@@ -117,6 +119,7 @@ def login_user():
 #                 !!! COMMENT OUT IF RUNNING LOCALLY !!!
 # -----------------------------------------------------------------------
 
+
 @appl.before_request
 def redirectHTTP():
     # redirect http to https
@@ -126,6 +129,7 @@ def redirectHTTP():
 # -----------------------------------------------------------------------
 #                         PAGE ROUTING SECTION
 # -----------------------------------------------------------------------
+
 
 @appl.route('/')
 @appl.route('/login')
@@ -140,7 +144,8 @@ def login():
 
 # -----------------------------------------------------------------------
 
-@appl.route('/register')
+
+@appl.route('/register', methods=['GET'])
 def register():
 
     netid, err = check_user(session)
@@ -155,7 +160,8 @@ def register():
 
 # -----------------------------------------------------------------------
 
-@appl.route('/register_user')
+
+@appl.route('/register_user', methods=['POST'])
 def register_user():
 
     netid, err = check_user(session)
@@ -165,15 +171,16 @@ def register_user():
     if isUser(netid):
         return redirect(url_for('index'), err="Already registered.")
 
-    first_name = request.args.get('first-name')
-    last_name = request.args.get('last-name')
-    class_year = request.args.get('class-year')
+    first_name = request.form['first-name']
+    last_name = request.form['last-name']
+    class_year = request.form['class-year']
 
     addUser(netid, " ".join(first_name, last_name), class_year)
 
     return redirect(url_for('index', err='Congratulations! You can now use TigerCrush!'))
 
 # -----------------------------------------------------------------------
+
 
 @appl.route('/index')
 def index():
@@ -220,6 +227,7 @@ def index():
 
 # -----------------------------------------------------------------------
 
+
 @appl.route('/faq')
 def faq():
     html = render_template("faq.html")
@@ -227,12 +235,14 @@ def faq():
 
 # -----------------------------------------------------------------------
 
+
 @appl.route('/about')
 def about():
     html = render_template("about.html")
     return make_response(html)
 
 # -----------------------------------------------------------------------
+
 
 @appl.route('/whitelist')
 def whitelist():
@@ -242,6 +252,7 @@ def whitelist():
 # -----------------------------------------------------------------------
 #                        ENDPOINTS FOR REQUESTS
 # -----------------------------------------------------------------------
+
 
 # helper endpoint that returns formatted Tigerbook data
 @appl.route('/studentInfo')
@@ -255,6 +266,7 @@ def studentInfo():
     return {'data': getFormattedStudentInfoList()}
 
 # -----------------------------------------------------------------------
+
 
 # gets and formats (into a list of strings to be displayed) the crushes
 # for the user with the specified netid
@@ -274,6 +286,7 @@ def crushes():
 
 # -----------------------------------------------------------------------
 
+
 # gets and formats (into a list of strings to be displayed) the matches
 # for the user with the specified netid
 @appl.route('/getMatches')
@@ -292,6 +305,7 @@ def matches():
                      for match in matchList]}
 
 # -----------------------------------------------------------------------
+
 
 # adds a crush (crushNetid arg) for a given user (netid)
 @appl.route('/addCrush', methods=['GET', 'POST'])
@@ -320,10 +334,12 @@ def addCrushEndpoint():
 #                   DATABASE INITIALIZATION COMMANDS
 # -----------------------------------------------------------------------
 
+
 # resets the database such that it consists of just a list of students and no
 # crushes between any two students
 from db_models import Crush, User
 from sqlalchemy import or_
+
 
 @appl.cli.command(name='createDB')
 def createDB():
@@ -358,6 +374,7 @@ def createDB():
         addUser(netid, name, year)
 
     print('Done!')
+
 
 @appl.cli.command(name='resetDB')
 def resetDB():
@@ -425,6 +442,7 @@ def resetDB():
 
 # -------------------------------------------------------------------------------
 
+
 # ONLY USE ON OTHER USERS WITH THEIR PERMISSION AND FOR TESTING PURPOSES
 @appl.cli.command(name='userStats')
 def userStats():
@@ -440,6 +458,7 @@ def userStats():
     print(curr_secret_admirers)
 
 # -------------------------------------------------------------------------------
+
 
 # dummy inefficient lol
 @appl.cli.command(name='usageStats')
@@ -458,6 +477,7 @@ def usageStats():
 
 # -------------------------------------------------------------------------------
 
+
 @appl.cli.command(name='addUser')
 def add_user():
     netid = input("netid: ")
@@ -471,6 +491,7 @@ def add_user():
     print("New user successfully added!")
 
 # -------------------------------------------------------------------------------
+
 
 # helper function that returns a Python dict of data grabbed from TigerBook
 def getStudents():
@@ -499,6 +520,7 @@ def getStudents():
 # -----------------------------------------------------------------------
 # Requires a port number as a command-line argument. Starts the app.
 # -----------------------------------------------------------------------
+
 
 if __name__ == '__main__':
 
