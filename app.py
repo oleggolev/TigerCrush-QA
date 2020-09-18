@@ -153,7 +153,7 @@ def register():
         return redirect(url_for('login', err='CAS authentication failed.'))
 
     if isUser(netid):
-        return redirect(url_for('index'), err="Already registered.")
+        return redirect(url_for('index', err="Already registered."))
 
     html = render_template("register.html")
     return make_response(html)
@@ -169,7 +169,7 @@ def register_user():
         return redirect(url_for('login', err='CAS authentication failed.'))
 
     if isUser(netid):
-        return redirect(url_for('index'), err="Already registered.")
+        return redirect(url_for('index', err="Already registered."))
 
     first_name = request.form['first-name']
     last_name = request.form['last-name']
