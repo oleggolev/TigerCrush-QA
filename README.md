@@ -1,6 +1,6 @@
 # TigerCrush-QA
 
-Copied from https://github.com/alanjding/TigerCrush, a collaborative project by me, Alan Ding, and Jerry Huang. This was meant to be a test instance, but it is no longer operational due to CAS expiry. The main project gathered over 1500 unique users among the Princeton students and was maintained for a 6-month month period after initial release. There are no current plans to prepare for another release.
+Copied from https://github.com/alanjding/TigerCrush, a collaborative project by me, Alan Ding, and Jerry Huang. This was meant to be a test instance, but it is no longer operational due to CAS expiry. The main project gathered over 1500 unique users among the Princeton students and was maintained for a 6-month period after initial release. There are no current plans to continue support for this application.
 
 ### Description
 
